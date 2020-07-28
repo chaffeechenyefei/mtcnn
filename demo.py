@@ -14,14 +14,14 @@ from face_validation import face_validator
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--i',default='/Users/marschen/Ucloud/Data/error_analysis/badge_ids_sample/')
-    parser.add_argument('--o',default='/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache_result/image_cache_fail/')
+    parser.add_argument('--o',default='/Users/marschen/Ucloud/Data/error_analysis/badge_ids_sample_fail/')
     args = parser.parse_args()
 
     print('--> loading mtcnn weights')
     weights_path = 'src/weights/'
     weights_path = os.path.abspath(weights_path)
 
-    face_val = face_validator(weights_path=weights_path,iqa_threshold=100)
+    face_val = face_validator(weights_path=weights_path,iqa_threshold=50)
 
     datapath = args.i
     savepath = args.o

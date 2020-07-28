@@ -33,7 +33,7 @@ class face_validator(object):
 
         bbox, landmark = self.mtcnn_infer(img_cv2,
                                      min_face_size=50.0,
-                                     thresholds=[0.6, 0.6, 0.6],
+                                     thresholds=[0.5, 0.6, 0.6],
                                      nms_thresholds=[0.7, 0.7, 0.7])
 
         bbox = list(bbox)
