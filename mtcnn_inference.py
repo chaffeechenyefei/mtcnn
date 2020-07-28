@@ -242,7 +242,7 @@ class MTCNNInference(object):
             thresholds=[0.6, 0.6, 0.6],
             nms_thresholds=[0.7, 0.7, 0.7],
             ):
-        return self.run_onet(img_cv2,min_face_size,thresholds,nms_thresholds)
+        return self.run(img_cv2,min_face_size,thresholds,nms_thresholds)
 
 
 
