@@ -82,7 +82,7 @@ def crop_margin(img_cv, margin=0.2):
     h, w = img_cv.shape[0:2]
     margin = math.floor(margin * min(h, w))
 
-    crop_img_cv = img_cv[margin:h - margin, margin:w - margin].copy()
+    crop_img_cv = img_cv[margin:- margin, margin:- margin].copy()
     return crop_img_cv
 
 

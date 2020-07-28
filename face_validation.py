@@ -7,7 +7,7 @@ import numpy as np
 
 
 from mtcnn_inference import MTCNNInference
-from iqa.svd_analysis import get_blur_score,face_format,crop_margin
+from iqa.svd_analysis import get_blur_score,face_format,crop_margin,get_texture_score
 
 class face_validator(object):
     def __init__(self,weights_path,iqa_threshold=120):
@@ -53,11 +53,11 @@ class face_validator(object):
         # cv2.imwrite('test.jpg',img_face)
         img_gray = cv2.cvtColor(img_face, cv2.COLOR_BGR2GRAY)
         # img_gray = img_gray.astype(np.float32) / 255
-        img_crop = crop_margin(img_gray, margin=0.2)
-        score = get_blur_score(img_crop)
-        # score = get_texture_score(img_crop, blocksize=30, stepsize=10)
+        img_crop = crop_margin(img_gray, margin=0.3)
+        # score = get_blur_score(img_crop)
+        score = get_texture_score(img_crop, blocksize=30, stepsize=10)
 
-        if score < self.iqa_threshold:
+        if score > self.iqa_threshold:
             print(score)
             return {
                 'val':-2,
