@@ -1,0 +1,15 @@
+.ipynb_checkpoints
+__pycache__
+
+affine_data/
+caffe_models/
+images/
+pose_data/
+proc_data/
+*.ipynb
+*.sh
+.idea/
+.DS_Store
+*.jpg
+LICENSE
+
