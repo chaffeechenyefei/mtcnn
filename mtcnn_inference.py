@@ -13,6 +13,7 @@ from src.box_utils import nms, calibrate_box, get_image_boxes, convert_to_square
 from src.first_stage import run_first_stage
 import cv2
 from src import detect_faces, show_bboxes
+import argparse
 from PIL import Image
 
 is_cuda = torch.cuda.is_available()
@@ -295,11 +296,18 @@ class MTCNNInference(object):
         return selected_bbox, selected_landmark,selected_prob
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--i',default='/data/data/')
+    parser.add_argument('--o',default='/data/result/')
+    args = parser.parse_args()
+
     weights_path = 'src/weights/'
     weights_path = os.path.abspath(weights_path)
     mtcnn_infer = MTCNNInference(weights_path= weights_path)
-    datapath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache/'
-    savepath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache_result/image_cache_fail/'
+    # datapath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache/'
+    # savepath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache_result/image_cache_fail/'
+    datapath = args.i
+    savepath = args.o
 
     img_lst = [ c for c in os.listdir(datapath) if not c.startswith('.')]
     total_img = len(img_lst)
