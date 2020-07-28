@@ -48,6 +48,7 @@ class face_validator(object):
         score = get_texture_score(img_crop, blocksize=30, stepsize=10)
 
         if score > self.iqa_threshold:
+            print(score)
             return {
                 'val':-2,
                 'info':'image quality no good enough'
