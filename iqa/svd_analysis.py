@@ -92,3 +92,6 @@ def crop_margin_col(img_cv, margin=0.2):
 
     crop_img_cv = img_cv[:, margin:w - margin].copy()
     return crop_img_cv
+
+def get_blur_score(img_cv):
+    return cv2.Laplacian(img_cv,ddepth=cv2.CV_64FC1).var()

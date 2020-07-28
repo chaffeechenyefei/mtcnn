@@ -7,10 +7,10 @@ import numpy as np
 
 
 from mtcnn_inference import MTCNNInference
-from iqa.svd_analysis import get_texture_score,face_format,crop_margin_col
+from iqa.svd_analysis import get_blur_score,face_format,crop_margin
 
 class face_validator(object):
-    def __init__(self,weights_path,iqa_threshold=80):
+    def __init__(self,weights_path,iqa_threshold=120):
         self._load_model(weights_path=weights_path)
         self.iqa_threshold = iqa_threshold
 
@@ -22,6 +22,14 @@ class face_validator(object):
     def __call__(self, img_cv2):
         if len(img_cv2.shape) < 3:
             img_cv2 = cv2.cvtColor(img_cv2,cv2.COLOR_GRAY2BGR)
+
+        hh,ww = img_cv2.shape[:2]
+        det_sz = 720
+        scale = det_sz/min([hh,ww])
+
+        if scale > 1.0:
+            img_cv2 = cv2.resize(img_cv2,dsize=None,fx=scale,fy=scale)
+
 
         bbox, landmark = self.mtcnn_infer(img_cv2,
                                      min_face_size=50.0,
@@ -44,10 +52,11 @@ class face_validator(object):
         img_face = face_format(img_face, 112)
         img_gray = cv2.cvtColor(img_face, cv2.COLOR_BGR2GRAY)
         img_gray = img_gray.astype(np.float32) / 255
-        img_crop = crop_margin_col(img_gray, margin=0.2)
-        score = get_texture_score(img_crop, blocksize=30, stepsize=10)
+        img_crop = crop_margin(img_gray, margin=0.2)
+        score = get_blur_score(img_crop)
+        # score = get_texture_score(img_crop, blocksize=30, stepsize=10)
 
-        if score > self.iqa_threshold:
+        if score < self.iqa_threshold:
             print(score)
             return {
                 'val':-2,

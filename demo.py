@@ -21,7 +21,7 @@ if __name__=='__main__':
     weights_path = 'src/weights/'
     weights_path = os.path.abspath(weights_path)
 
-    face_val = face_validator(weights_path=weights_path,iqa_threshold=0.8)
+    face_val = face_validator(weights_path=weights_path,iqa_threshold=120)
 
     datapath = args.i
     savepath = args.o
