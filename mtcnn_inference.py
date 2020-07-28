@@ -297,15 +297,14 @@ class MTCNNInference(object):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--i',default='/data/data/')
-    parser.add_argument('--o',default='/data/result/')
+    parser.add_argument('--i',default='/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache/')
+    parser.add_argument('--o',default='/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache_result/image_cache_fail/')
     args = parser.parse_args()
 
     weights_path = 'src/weights/'
     weights_path = os.path.abspath(weights_path)
     mtcnn_infer = MTCNNInference(weights_path= weights_path)
-    # datapath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache/'
-    # savepath = '/Users/marschen/Ucloud/Data/error_analysis/emb_sys/image_cache_result/image_cache_fail/'
+
     datapath = args.i
     savepath = args.o
 
@@ -318,7 +317,7 @@ def main():
 
         ret = mtcnn_infer.is_face_inside(img_cv2,
                  min_face_size=50.0,
-                 thresholds=[0.6, 0.7, 0.8],
+                 thresholds=[0.6, 0.6, 0.6],
                  nms_thresholds=[0.7, 0.7, 0.7])
         print(img_name,ret)
 
