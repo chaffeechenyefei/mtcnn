@@ -24,14 +24,14 @@ class face_validator(object):
             img_cv2 = cv2.cvtColor(img_cv2,cv2.COLOR_GRAY2BGR)
 
         hh,ww = img_cv2.shape[:2]
-        det_sz = 720
+        det_sz = 1024
         scale = det_sz/min([hh,ww])
 
-        if scale > 1.0:
-            img_cv2 = cv2.resize(img_cv2,dsize=None,fx=scale,fy=scale)
+        scale = max([scale,1.0])
+        img_cv2_scaled = cv2.resize(img_cv2,dsize=None,fx=scale,fy=scale)
 
 
-        bbox, landmark = self.mtcnn_infer(img_cv2,
+        bbox, landmark = self.mtcnn_infer(img_cv2_scaled,
                                      min_face_size=50.0,
                                      thresholds=[0.5, 0.6, 0.6],
                                      nms_thresholds=[0.7, 0.7, 0.7])
@@ -43,10 +43,10 @@ class face_validator(object):
                 'info':'no face detected'
             }
 
-        cx = int((bbox[0] + bbox[2]) / 2)
-        cy = int((bbox[1] + bbox[3]) / 2)
-        w = int((bbox[2] - bbox[0]) / 2)
-        h = int((bbox[3] - bbox[1]) / 2)
+        cx = int((bbox[0] + bbox[2]) / 2 / scale)
+        cy = int((bbox[1] + bbox[3]) / 2 / scale)
+        w = int((bbox[2] - bbox[0])/scale)
+        h = int((bbox[3] - bbox[1])/scale)
 
         img_face = cv2.getRectSubPix(img_cv2, (w, h), (cx, cy))
         img_face = face_format(img_face, 112)
