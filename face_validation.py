@@ -50,6 +50,7 @@ class face_validator(object):
 
         img_face = cv2.getRectSubPix(img_cv2, (w, h), (cx, cy))
         img_face = face_format(img_face, 112)
+        # cv2.imwrite('test.jpg',img_face)
         img_gray = cv2.cvtColor(img_face, cv2.COLOR_BGR2GRAY)
         # img_gray = img_gray.astype(np.float32) / 255
         img_crop = crop_margin(img_gray, margin=0.2)
